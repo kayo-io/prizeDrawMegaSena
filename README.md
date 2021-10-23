@@ -1,2 +1,4 @@
 # prizeDrawMegaSena
-Shows the result of the last Mega Sena draw.
+Shows the results of TimeMania, Quina and Mega Sena.
+
+Search Base URL: http://loterias.caixa.gov.br/wps/portal/loterias/landing/
