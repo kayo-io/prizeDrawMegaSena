@@ -49,7 +49,7 @@ public class ResultMegaSena {
         String[] trashNumbers = extract.split("</li>");
         List<String> numbers = Arrays.stream(trashNumbers).map(trash -> trash.replace("<li>", "")).collect(Collectors.toList());
 
-        return numbers;
+        return numbers.subList(0,6);
 
     }
 
