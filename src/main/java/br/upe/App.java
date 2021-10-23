@@ -4,6 +4,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        ResultMegaSena.getLastResult();
+        System.out.println("Resultado da Última Mega Sena: " + ResultMegaSena.getLastResult());
+        System.out.println("Resultado da Última Quina: " + ResultsQuina.getLastResult());
+        System.out.println("Resultado da Última Timemania: " + ResultTimeMania.getLastResult());
     }
 }
