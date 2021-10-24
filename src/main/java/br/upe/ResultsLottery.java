@@ -9,14 +9,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResultsQuina {
-    private final static String URL = "http://loterias.caixa.gov.br/wps/portal/loterias/landing/";
+class ResultsLottery {
 
-    private final static String initialTag = "<ul class=\"resultado-loteria quina\">";
+    private static String initialTag;
+
+    private static String prizeDraw;
+
+    public ResultsLottery(String prizeDraw) {
+        this.prizeDraw = prizeDraw;
+        ResultsLottery.initialTag = "<ul class=\"resultado-loteria " + prizeDraw + "\">";
+    }
+
+    private final static String URL = "http://loterias.caixa.gov.br/wps/portal/loterias/landing/";
 
     private final static String finalTag = "</ul>";
 
-    public static List<String> getLastResult() {
+    public final static void getLastResult() {
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -25,7 +33,7 @@ public class ResultsQuina {
 
             String html = httpClient.execute(httpget, new BasicResponseHandler());
 
-            return getDozens(html);
+            getDozens(html, initialTag);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,20 +43,21 @@ public class ResultsQuina {
 
         }
 
-        return null;
     }
 
-    private static List<String> getDozens(String html) {
+    private final static void getDozens(String html, String initialTag) {
+
         int idxBeginSearch = html.indexOf(initialTag) + initialTag.length();
 
-        int idxEndSearch = idxBeginSearch + html.substring(idxBeginSearch,html.length()).indexOf(finalTag);
+        int idxEndSearch = idxBeginSearch + html.substring(idxBeginSearch, html.length()).indexOf(finalTag);
 
         String extract = html.substring(idxBeginSearch, idxEndSearch);
 
         String[] trashNumbers = extract.split("</li>");
         List<String> numbers = Arrays.stream(trashNumbers).map(trash -> trash.replace("<li>", "")).collect(Collectors.toList());
 
-        return numbers.subList(0,5);
+
+        System.out.println("Resultado da " + prizeDraw.toUpperCase() + ": " + numbers);
 
     }
 
