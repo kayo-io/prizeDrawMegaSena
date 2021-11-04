@@ -46,7 +46,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-    environment: development
+    environment: homologation
     needs: [Deploy-Development]
 
     steps:
