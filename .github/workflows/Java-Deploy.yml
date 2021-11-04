@@ -2,7 +2,7 @@ name: Java Deploy CI/CD with Maven
 
 on: 
   workflow_dispatch:
-  
+  ta
 #   [push]
 #   push:
 #     branches: [ main ]
