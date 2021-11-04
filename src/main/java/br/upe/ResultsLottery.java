@@ -5,6 +5,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
+import java.util.function.Predicate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,11 +55,10 @@ class ResultsLottery {
 
         String extract = html.substring(idxBeginSearch, idxEndSearch);
 
-        String[] trashNumbers = extract.split("</li>");
-        List<String> numbers = Arrays.stream(trashNumbers).map(trash -> trash.replace("<li>", "")).collect(Collectors.toList());
+        Predicate<String> empty = String::isEmpty;
+        List<String> numbers = Arrays.stream(extract.split("\\D")).filter(empty.negate()).collect(Collectors.toList());
 
         return numbers;
-//        System.out.println("Resultado da " + prizeDraw.toUpperCase() + ": " + numbers);
 
     }
 
