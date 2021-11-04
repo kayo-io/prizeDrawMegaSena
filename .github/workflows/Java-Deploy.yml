@@ -30,8 +30,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
   
-  Deploy - Development:
-    name: 
+  Deploy-Development:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -42,25 +41,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-  Deploy - Homologation:
-    name: 
+  Deploy-Homologation:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
     environment: development
-    needs: [Deploy - Development]
+    needs: [Deploy-Development]
 
     steps:
       - uses: actions/checkout@v2
       
-  Deploy - Production:
-    name: 
+  Deploy-Production:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-    needs: [Deploy - Homologation]
+    needs: [Deploy-Homologation]
 
     steps:
       - uses: actions/checkout@v2
