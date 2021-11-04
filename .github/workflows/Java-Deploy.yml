@@ -1,0 +1,67 @@
+name: Java Deploy CI/CD with Maven
+
+on: 
+  workflow_dispatch:
+  
+#   [push]
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+
+jobs:
+  Build:
+    name: Build Maven multi OS
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+        cache: maven
+        
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+  
+  Deploy - Development:
+    name: 
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    environment: development
+    needs: [Build]
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+  Deploy - Homologation:
+    name: 
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    environment: development
+    needs: [Deploy - Development]
+
+    steps:
+      - uses: actions/checkout@v2
+      
+  Deploy - Production:
+    name: 
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    needs: [Deploy - Homologation]
+
+    steps:
+      - uses: actions/checkout@v2
+    
