@@ -24,7 +24,7 @@ class ResultsLottery {
 
     private final static String finalTag = "</ul>";
 
-    public final static void getLastResult() {
+    public final static List<String> getLastResult() {
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -33,7 +33,7 @@ class ResultsLottery {
 
             String html = httpClient.execute(httpget, new BasicResponseHandler());
 
-            getDozens(html, initialTag);
+            return getDozens(html, initialTag);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,9 +43,10 @@ class ResultsLottery {
 
         }
 
+        return null;
     }
 
-    private final static void getDozens(String html, String initialTag) {
+    private final static List<String> getDozens(String html, String initialTag) {
 
         int idxBeginSearch = html.indexOf(initialTag) + initialTag.length();
 
@@ -56,8 +57,8 @@ class ResultsLottery {
         String[] trashNumbers = extract.split("</li>");
         List<String> numbers = Arrays.stream(trashNumbers).map(trash -> trash.replace("<li>", "")).collect(Collectors.toList());
 
-
-        System.out.println("Resultado da " + prizeDraw.toUpperCase() + ": " + numbers);
+        return numbers;
+//        System.out.println("Resultado da " + prizeDraw.toUpperCase() + ": " + numbers);
 
     }
 
