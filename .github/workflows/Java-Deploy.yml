@@ -1,4 +1,4 @@
-name: Java Deploy CI/CD with Maven
+name: Java_CI/CD_Maven
 
 on: 
   workflow_dispatch:
