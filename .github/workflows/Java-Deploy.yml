@@ -2,7 +2,6 @@ name: Java_CI/CD_Maven
 
 on: 
   workflow_dispatch:
-  ta
 #   [push]
 #   push:
 #     branches: [ main ]
